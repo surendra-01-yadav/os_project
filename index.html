@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Process Synchronization Visualizer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div id="app">
+    <header>
+      <h1>Process Synchronization Visualizer</h1>
+
+      <div class="controls">
+        <label>
+          Scenario:
+          <select id="scenario">
+            <option value="producer">Producer–Consumer</option>
+            <option value="dining">Dining Philosophers</option>
+          </select>
+        </label>
+
+        <button id="startPause">Start</button>
+        <button id="step">Step</button>
+        <button id="reset">Reset</button>
+
+        <label>
+          Tick (ms):
+          <input id="tick" type="number" min="100" value="700" />
+        </label>
+
+        <label id="bufLabel">
+          Buffer Size:
+          <input id="bufSize" type="number" min="1" max="12" value="5" />
+        </label>
+      </div>
+    </header>
+
+    <main>
+      <section id="left">
+        <div class="panel">
+          <h3>Simulation</h3>
+          <canvas id="canvas" width="1000" height="640"></canvas>
+        </div>
+
+        <div class="panel small">
+          <h3>Actions</h3>
+
+          <div class="row">
+            <button id="addProducer">+ Producer</button>
+            <button id="removeProducer">– Producer</button>
+            <button id="addConsumer">+ Consumer</button>
+            <button id="removeConsumer">– Consumer</button>
+          </div>
+
+          <div class="row">
+            <button id="incSem">Increase Empty</button>
+            <button id="decSem">Decrease Empty</button>
+          </div>
+        </div>
+      </section>
+
+      <aside id="right">
+        <div class="panel">
+          <h3>State</h3>
+          <div id="stateInfo"></div>
+        </div>
+
+        <div class="panel">
+          <h3>Legend</h3>
+          <div class="legend">
+            <div><span class="box run"></span> Running</div>
+            <div><span class="box wait"></span> Waiting</div>
+            <div><span class="box crit"></span> Critical Section</div>
+            <div><span class="box idle"></span> Idle</div>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      <small>OS Simulation Project · CSE316</small>
+    </footer>
+  </div>
+
+  <!-- IMPORTANT: Load main JS as module -->
+  <script type="module" src="script.js"></script>
+</body>
+</html>
+

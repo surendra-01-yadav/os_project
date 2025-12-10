@@ -1,0 +1,104 @@
+:root {
+  --bg: #f3f5f9;
+  --panel: #ffffff;
+  --accent: #2f80ed;
+  --accent-dark: #1f6ad8;
+  --muted: #4a5568;
+  --border-soft: #dce3ee;
+
+  --ok: #27ae60;
+  --warn: #f39c12;
+  --crit: #e74c3c;
+
+  --radius: 10px;
+  --shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  --font: "Inter", Arial, sans-serif;
+}
+
+* { box-sizing: border-box; font-family: var(--font); }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: #222;
+}
+
+#app {
+  max-width: 1200px;
+  margin: 24px auto;
+  padding: 12px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.controls input {
+  padding: 6px;
+  border: 1px solid var(--border-soft);
+  border-radius: 6px;
+}
+
+main {
+  display: flex;
+  gap: 16px;
+}
+
+#left {
+  flex: 1;
+}
+
+#right {
+  width: 320px;
+}
+
+.panel {
+  background: white;
+  padding: 16px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-soft);
+  margin-bottom: 14px;
+}
+
+canvas {
+  width: 100%;
+  border-radius: var(--radius);
+  border: 2px solid #c8d2e3;
+}
+
+button {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--accent-dark);
+}
+
+.row { display: flex; gap: 10px; }
+
+.legend .box {
+  width: 18px;
+  height: 14px;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.box.run { background: var(--ok); }
+.box.wait { background: var(--warn); }
+.box.crit { background: var(--crit); }
+.box.idle { background: #cfd8e3; }
