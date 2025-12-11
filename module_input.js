@@ -76,3 +76,4 @@ const InputModule = {
         document.getElementById('btn-scen-dp').disabled = running;
     }
 };
+
