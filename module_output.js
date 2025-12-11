@@ -65,3 +65,18 @@ const OutputModule = {
         this.els.valF.innerText = state.full;
 
 
+
+/* ========== PART 5: RENDER PC – PROCESS LIST (Commit 5) ========== */
+        const mkItem = (p, role) => `
+            <div class="proc-box ${p.state}">
+                <span>${role} ${p.id}</span>
+                <small>${p.state.toUpperCase()}</small>
+            </div>
+        `;
+
+        this.els.listProd.innerHTML = state.producers.map(p => mkItem(p, 'Producer')).join('');
+        this.els.listCons.innerHTML = state.consumers.map(c => mkItem(c, 'Consumer')).join('');
+    },
+
+
+
