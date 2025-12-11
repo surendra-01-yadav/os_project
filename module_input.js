@@ -47,6 +47,10 @@ const InputModule = {
         document.getElementById('btn-step')
             .addEventListener('click', () => logic.nextStep());
 
+        /* ========== PART 6: CONFIG INPUTS (BUFFER SIZE) (Commit 6) ========== */
+        document.getElementById('inp-buffer-size')
+            .addEventListener('change', (e) => logic.setBufferSize(e.target.value));
+
 
 
     
