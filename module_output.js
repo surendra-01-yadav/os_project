@@ -136,4 +136,3 @@ const OutputModule = {
         this.els.valForks.innerText = state.forks.filter(f => f).length;
     }
 };
-
