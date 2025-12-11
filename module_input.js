@@ -30,6 +30,19 @@ const InputModule = {
             this.toggleState(true);
         });
 
+        
+/* ========== PART 4: PLAYBACK CONTROL – STOP & RESET (Commit 4) ========== */
+        document.getElementById('btn-stop').addEventListener('click', () => {
+            stop();
+            this.toggleState(false);
+        });
+
+        document.getElementById('btn-reset').addEventListener('click', () => {
+            stop();
+            logic.reset();
+            this.toggleState(false);
+        });
+
 
     
 
