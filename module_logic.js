@@ -68,4 +68,21 @@ const LogicModule = {
         }
     },
 
+   /* ============================================================
+   PART 4: PROCESS MANAGEMENT (PC ONLY)  (Commit #4)
+   Handles: Adding/removing producers/consumers
+   ============================================================ */
+    addProcess: function(type) {
+        if(this.state.scenario !== 'PC') return;
+        const list = type === 'prod' ? this.state.producers : this.state.consumers;
+        const id = list.length > 0 ? list[list.length - 1].id + 1 : 1;
+        list.push({ id: id, state: 'idle' });
+    },
+
+    removeProcess: function(type) {
+        if(this.state.scenario !== 'PC') return;
+        const list = type === 'prod' ? this.state.producers : this.state.consumers;
+        if (list.length > 0) list.pop();
+    },
+
    
