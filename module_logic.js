@@ -94,4 +94,72 @@ const LogicModule = {
         else this.tickDP();
     },
 
+   /* ============================================================
+   PART 6 — PRODUCER–CONSUMER ALGORITHM  (Commit #6)
+   ============================================================ */
+    tickPC: function() {
+
+        const isProd = Math.random() > 0.5;
+
+        // ---------- PRODUCER ----------
+        if (isProd && this.state.producers.length) {
+            const p = this.state.producers[
+                Math.floor(Math.random() * this.state.producers.length)
+            ];
+
+            if (p.state === 'idle' || p.state === 'wait') {
+                if (this.state.mutex === 1 && this.state.empty > 0) {
+
+                    // Enter critical section
+                    this.state.mutex = 0;
+                    this.state.empty--;
+                    p.state = 'crit';
+
+                    this.state.log = `Producer ${p.id} is producing data...`;
+
+                    setTimeout(() => {
+                        this.state.buffer.push('D');
+                        this.state.mutex = 1;
+                        this.state.full++;
+                        p.state = 'idle';
+                    }, 500);
+
+                } else {
+                    p.state = 'wait';
+                    this.state.log = `Producer ${p.id} waiting (Buffer Full).`;
+                }
+            }
+        }
+
+        // ---------- CONSUMER ----------
+        else if (this.state.consumers.length) {
+            const c = this.state.consumers[
+                Math.floor(Math.random() * this.state.consumers.length)
+            ];
+
+            if (c.state === 'idle' || c.state === 'wait') {
+                if (this.state.mutex === 1 && this.state.full > 0) {
+
+                    // Enter critical section
+                    this.state.mutex = 0;
+                    this.state.full--;
+                    c.state = 'crit';
+
+                    this.state.log = `Consumer ${c.id} is consuming data...`;
+
+                    setTimeout(() => {
+                        this.state.buffer.pop();
+                        this.state.mutex = 1;
+                        this.state.empty++;
+                        c.state = 'idle';
+                    }, 500);
+
+                } else {
+                    c.state = 'wait';
+                    this.state.log = `Consumer ${c.id} waiting (Buffer Empty).`;
+                }
+            }
+        }
+    },
+
    
