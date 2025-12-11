@@ -24,3 +24,14 @@ const OutputModule = {
         table: document.getElementById('dining-table'),
         valForks: document.getElementById('val-forks')
     },
+
+/* ========== PART 2: MAIN RENDER FUNCTION (Commit 2) ========== */
+    render: function(state, isRunning) {
+        this.els.log.innerText = state.log;
+        this.els.status.innerText = isRunning ? "Running" : "Idle";
+        this.els.status.style.color = isRunning ? "var(--success)" : "#666";
+
+        if(state.scenario === 'PC') this.renderPC(state);
+        else this.renderDP(state);
+    },
+
