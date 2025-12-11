@@ -79,6 +79,7 @@ const OutputModule = {
     },
 
 
+
 /* ========== PART 6: RENDER DP – TABLE + PHILOSOPHERS (Commit 6) ========== */
     renderDP: function(state) {
         // UI toggles
@@ -115,6 +116,7 @@ const OutputModule = {
             div.innerHTML = `<i class="fas fa-${icon}"></i><br>P${i+1}`;
             this.els.table.appendChild(div);
         });
+
 
 /* ========== PART 7: RENDER DP – FORKS + COUNTERS (Commit 7) ========== */
         state.forks.forEach((av, i) => {
