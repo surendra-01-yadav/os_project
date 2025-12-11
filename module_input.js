@@ -23,6 +23,13 @@ const InputModule = {
         btnPC.addEventListener('click', () => switchMode('PC'));
         btnDP.addEventListener('click', () => switchMode('DP'));
 
+        /* ========== PART 3: PLAYBACK CONTROL – START (Commit 3) ========== */
+        document.getElementById('btn-start').addEventListener('click', () => {
+            const speed = document.getElementById('inp-speed').value;
+            start(speed);
+            this.toggleState(true);
+        });
+
 
     
 
