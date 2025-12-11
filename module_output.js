@@ -35,3 +35,20 @@ const OutputModule = {
         else this.renderDP(state);
     },
 
+/* ========== PART 3: RENDER PC – UI SETUP (Commit 3) ========== */
+    renderPC: function(state) {
+        // Show PC view, hide DP
+        this.els.viewPC.classList.remove('hidden');
+        this.els.viewDP.classList.add('hidden');
+        this.els.pcActions.classList.remove('hidden');
+        this.els.legPC.classList.remove('hidden');
+        this.els.legDP.classList.add('hidden');
+        this.els.grpBuff.style.visibility = 'visible';
+
+        this.els.title.innerText = "Producer-Consumer Problem";
+        this.els.desc.innerHTML = `
+            <strong>How it works:</strong> Producers create data and put it in 
+            the buffer. Consumers remove data. They wait if buffer is full/empty.
+        `;
+
+
