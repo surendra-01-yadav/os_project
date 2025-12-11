@@ -84,5 +84,14 @@ const LogicModule = {
         const list = type === 'prod' ? this.state.producers : this.state.consumers;
         if (list.length > 0) list.pop();
     },
+   
+   /* ============================================================
+   PART 5: STEP CONTROLLER  (Commit #5)
+   Handles: Next state update for PC / DP
+   ============================================================ */
+    nextStep: function() {
+        if (this.state.scenario === 'PC') this.tickPC();
+        else this.tickDP();
+    },
 
    
