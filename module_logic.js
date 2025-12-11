@@ -94,8 +94,8 @@ const LogicModule = {
         else this.tickDP();
     },
 
-   /* ============================================================
-   PART 6 — PRODUCER–CONSUMER ALGORITHM  (Commit #6)
+ /* ============================================================
+   PART 6 — PRODUCER–CONSUMER ALGORITHM      (Commit #6)
    ============================================================ */
     tickPC: function() {
 
