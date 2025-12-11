@@ -60,6 +60,17 @@ const InputModule = {
         act('btn-rem-cons', () => logic.removeProcess('cons'));
     },
 
+    /* ========== TOGGLE UI STATE (SEPARATE FROM SETUP) ========== */
+    toggleState: function(running) {
+        document.getElementById('btn-start').classList.toggle('hidden', running);
+        document.getElementById('btn-stop').classList.toggle('hidden', !running);
+
+        // Disable scenario switching while running
+        document.getElementById('btn-scen-pc').disabled = running;
+        document.getElementById('btn-scen-dp').disabled = running;
+    }
+};
+
 
 
     
