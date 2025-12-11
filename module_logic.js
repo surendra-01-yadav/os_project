@@ -24,3 +24,18 @@ const LogicModule = {
     init: function() { 
         this.reset(); 
     },
+
+   /* ============================================================
+   PART 2: SCENARIO MANAGEMENT  (Commit #2)
+   Handles: Switching PC ↔ DP, buffer size changes
+   ============================================================ */
+
+   switchScenario: function(newScen) {
+        this.state.scenario = newScen;
+        this.reset();
+    },
+
+    setBufferSize: function(size) {
+        this.state.bufferSize = parseInt(size);
+        this.reset();
+    },
