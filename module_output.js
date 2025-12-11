@@ -79,4 +79,41 @@ const OutputModule = {
     },
 
 
+/* ========== PART 6: RENDER DP – TABLE + PHILOSOPHERS (Commit 6) ========== */
+    renderDP: function(state) {
+        // UI toggles
+        this.els.viewPC.classList.add('hidden');
+        this.els.viewDP.classList.remove('hidden');
+        this.els.pcActions.classList.add('hidden');
+        this.els.legPC.classList.add('hidden');
+        this.els.legDP.classList.remove('hidden');
+        this.els.grpBuff.style.visibility = 'hidden';
+
+        this.els.title.innerText = "Dining Philosophers Problem";
+        this.els.desc.innerHTML = `
+            <strong>How it works:</strong> Philosophers need two forks to eat.
+            If forks aren't available, they wait (starvation possible).
+        `;
+
+        this.els.table.innerHTML = '';
+        const cx = 125, cy = 125, r = 90;
+
+        state.philosophers.forEach((p, i) => {
+            const ang = (i * 72 - 90) * Math.PI / 180;
+            const x = cx + r * Math.cos(ang) - 35;
+            const y = cy + r * Math.sin(ang) - 35;
+
+            const div = document.createElement('div');
+            div.className = `phil ${p.state}`;
+            div.style.left = `${x}px`;
+            div.style.top = `${y}px`;
+
+            let icon = 'brain';
+            if (p.state === 'hungry') icon = 'utensils';
+            if (p.state === 'eat') icon = 'face-grin-stars';
+
+            div.innerHTML = `<i class="fas fa-${icon}"></i><br>P${i+1}`;
+            this.els.table.appendChild(div);
+        });
+
 
