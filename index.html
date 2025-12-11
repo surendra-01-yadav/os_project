@@ -1,91 +1,160 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Process Synchronization Visualizer</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Process Synchronization Visualizer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-
 <body>
-  <div id="app">
-    <header>
-      <h1>Process Synchronization Visualizer</h1>
 
-      <div class="controls">
-        <label>
-          Scenario:
-          <select id="scenario">
-            <option value="producer">Producer–Consumer</option>
-            <option value="dining">Dining Philosophers</option>
-          </select>
-        </label>
-
-        <button id="startPause">Start</button>
-        <button id="step">Step</button>
-        <button id="reset">Reset</button>
-
-        <label>
-          Tick (ms):
-          <input id="tick" type="number" min="100" value="700" />
-        </label>
-
-        <label id="bufLabel">
-          Buffer Size:
-          <input id="bufSize" type="number" min="1" max="12" value="5" />
-        </label>
-      </div>
+    <header class="main-header">
+        <div class="header-content">
+            <div class="brand">
+                <h1><i class="fas fa-network-wired"></i> OS Sync Visualizer</h1>
+            </div>
+            
+            <div class="scenario-group">
+                <span class="label">Select Scenario:</span>
+                <button id="btn-scen-pc" class="btn-tab active">Producer-Consumer</button>
+                <button id="btn-scen-dp" class="btn-tab">Dining Philosophers</button>
+            </div>
+        </div>
     </header>
 
-    <main>
-      <section id="left">
-        <div class="panel">
-          <h3>Simulation</h3>
-          <canvas id="canvas" width="1000" height="640"></canvas>
+    <main class="container">
+        
+        <section class="controls-card">
+            <div class="control-row">
+                <div class="setting-group">
+                    <label><i class="fas fa-tachometer-alt"></i> Speed (ms)</label>
+                    <input type="number" id="inp-speed" value="1000" min="100" step="100">
+                </div>
+                
+                <div class="setting-group" id="grp-buffer-size">
+                    <label><i class="fas fa-layer-group"></i> Buffer Size</label>
+                    <input type="number" id="inp-buffer-size" value="5" min="1" max="10">
+                </div>
+
+                <div class="btn-separator"></div>
+
+                <div class="playback-controls">
+                    <button id="btn-start" class="btn btn-primary"><i class="fas fa-play"></i> Start Simulation</button>
+                    <button id="btn-stop" class="btn btn-danger hidden"><i class="fas fa-stop"></i> Stop</button>
+                    <button id="btn-step" class="btn btn-secondary"><i class="fas fa-step-forward"></i> Next Step</button>
+                    <button id="btn-reset" class="btn btn-outline"><i class="fas fa-undo"></i> Reset</button>
+                </div>
+            </div>
+        </section>
+
+        <div class="layout-grid">
+            
+            <section class="card simulation-card">
+                <div class="card-header">
+                    <h2 id="sim-title">Producer-Consumer Problem</h2>
+                    <span id="status-badge" class="badge">Idle</span>
+                </div>
+
+                <div class="description-box">
+                    <i class="fas fa-info-circle"></i>
+                    <p id="sim-description">
+                        <strong>How it works:</strong> Producers create data and add it to the buffer. Consumers remove data. They must coordinate so Producers don't add to a full buffer and Consumers don't take from an empty one.
+                    </p>
+                </div>
+
+                <div class="stage-content">
+                    
+                    <div id="view-pc" class="view-panel">
+                        <div class="buffer-area">
+                            <h3>Shared Buffer (Storage)</h3>
+                            <div id="buffer-track" class="buffer-track"></div>
+                        </div>
+
+                        <div class="sem-display">
+                            <div class="sem-box">
+                                <span class="sem-label">Mutex (Lock)</span>
+                                <span class="sem-value" id="val-mutex">1</span>
+                            </div>
+                            <div class="sem-box">
+                                <span class="sem-label">Empty Slots</span>
+                                <span class="sem-value" id="val-empty">5</span>
+                            </div>
+                            <div class="sem-box">
+                                <span class="sem-label">Full Slots</span>
+                                <span class="sem-value" id="val-full">0</span>
+                            </div>
+                        </div>
+
+                        <div class="process-lanes">
+                            <div class="lane">
+                                <h4>Active Producers</h4>
+                                <div id="list-producers" class="proc-list"></div>
+                            </div>
+                            <div class="lane">
+                                <h4>Active Consumers</h4>
+                                <div id="list-consumers" class="proc-list"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="view-dp" class="view-panel hidden">
+                        <div class="dining-wrapper">
+                            <div id="dining-table" class="circle-table">
+                                </div>
+                        </div>
+                        <div class="sem-display">
+                            <div class="sem-box">
+                                <span class="sem-label">Forks Available</span>
+                                <span class="sem-value" id="val-forks">5</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="log-box">
+                    <span class="log-label">System Log:</span> <span id="log-text">Ready to start...</span>
+                </div>
+            </section>
+
+            <aside class="info-sidebar">
+                
+                <div id="pc-actions-panel" class="card mini-card">
+                    <h3>Manage Processes</h3>
+                    <div class="action-list">
+                        <button id="btn-add-prod" class="btn-action full-width"><i class="fas fa-plus"></i> Add Producer</button>
+                        <button id="btn-rem-prod" class="btn-action full-width"><i class="fas fa-minus"></i> Remove Producer</button>
+                        <hr class="divider">
+                        <button id="btn-add-cons" class="btn-action full-width"><i class="fas fa-plus"></i> Add Consumer</button>
+                        <button id="btn-rem-cons" class="btn-action full-width"><i class="fas fa-minus"></i> Remove Consumer</button>
+                    </div>
+                </div>
+
+                <div class="card mini-card">
+                    <h3>Color Legend</h3>
+                    
+                    <ul id="legend-pc" class="legend-list">
+                        <li><span class="dot run"></span> Running (Active)</li>
+                        <li><span class="dot wait"></span> Waiting (Blocked)</li>
+                        <li><span class="dot crit"></span> Critical Section</li>
+                        <li><span class="dot idle"></span> Idle</li>
+                    </ul>
+
+                    <ul id="legend-dp" class="legend-list hidden">
+                        <li><span class="dot run"></span> Eating</li>
+                        <li><span class="dot wait"></span> Hungry (Waiting)</li>
+                        <li><span class="dot idle"></span> Thinking</li>
+                    </ul>
+                </div>
+            </aside>
+
         </div>
-
-        <div class="panel small">
-          <h3>Actions</h3>
-
-          <div class="row">
-            <button id="addProducer">+ Producer</button>
-            <button id="removeProducer">– Producer</button>
-            <button id="addConsumer">+ Consumer</button>
-            <button id="removeConsumer">– Consumer</button>
-          </div>
-
-          <div class="row">
-            <button id="incSem">Increase Empty</button>
-            <button id="decSem">Decrease Empty</button>
-          </div>
-        </div>
-      </section>
-
-      <aside id="right">
-        <div class="panel">
-          <h3>State</h3>
-          <div id="stateInfo"></div>
-        </div>
-
-        <div class="panel">
-          <h3>Legend</h3>
-          <div class="legend">
-            <div><span class="box run"></span> Running</div>
-            <div><span class="box wait"></span> Waiting</div>
-            <div><span class="box crit"></span> Critical Section</div>
-            <div><span class="box idle"></span> Idle</div>
-          </div>
-        </div>
-      </aside>
     </main>
 
-    <footer>
-      <small>OS Simulation Project · CSE316</small>
-    </footer>
-  </div>
-
-  <!-- IMPORTANT: Load main JS as module -->
-  <script type="module" src="script.js"></script>
+    <script src="module_logic.js"></script>
+    <script src="module_output.js"></script>
+    <script src="module_input.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
-
