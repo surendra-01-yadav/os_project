@@ -163,3 +163,42 @@ const LogicModule = {
     },
 
    
+/* ============================================================
+   PART 7 — DINING PHILOSOPHERS ALGO  (Commit #7)
+   ============================================================ */
+    tickDP: function() {
+        const i = Math.floor(Math.random() * 5);
+        const phil = this.state.philosophers[i];
+
+        const left = i;
+        const right = (i + 1) % 5;
+
+        if (phil.state === 'think') {
+            phil.state = 'hungry';
+            this.state.log = `Philosopher ${i + 1} is hungry.`;
+        }
+        else if (phil.state === 'hungry') {
+            if (this.state.forks[left] && this.state.forks[right]) {
+                this.state.forks[left] = false;
+                this.state.forks[right] = false;
+
+                phil.state = 'eat';
+                this.state.log = `Philosopher ${i + 1} starts eating.`;
+            }
+            else {
+                this.state.log = `Philosopher ${i + 1} is waiting for forks.`;
+            }
+        }
+        else if (phil.state === 'eat') {
+            this.state.forks[left] = true;
+            this.state.forks[right] = true;
+
+            phil.state = 'think';
+            this.state.log = `Philosopher ${i + 1} finished eating and is thinking.`;
+        }
+    },
+
+    getState: function() {
+        return this.state;
+    }
+};
