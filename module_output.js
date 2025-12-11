@@ -51,4 +51,17 @@ const OutputModule = {
             the buffer. Consumers remove data. They wait if buffer is full/empty.
         `;
 
+/* ========== PART 4: RENDER PC – BUFFER + SEMAPHORES (Commit 4) ========== */
+        this.els.buffer.innerHTML = '';
+        for (let i = 0; i < state.bufferSize; i++) {
+            const slot = document.createElement('div');
+            slot.className = 'buffer-slot' + (i < state.buffer.length ? ' filled' : '');
+            slot.innerText = i < state.buffer.length ? 'Data' : i + 1;
+            this.els.buffer.appendChild(slot);
+        }
+
+        this.els.valM.innerText = state.mutex;
+        this.els.valE.innerText = state.empty;
+        this.els.valF.innerText = state.full;
+
 
