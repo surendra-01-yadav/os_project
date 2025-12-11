@@ -1,3 +1,7 @@
+/* ============================================================
+   PART 1: MODULE INITIALIZATION  (Commit #1)
+   Handles: Base object, state storage, init/reset trigger
+   ============================================================ */
 const LogicModule = {
     state: {
         scenario: 'PC', // 'PC' or 'DP'
