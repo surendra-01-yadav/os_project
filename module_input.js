@@ -43,6 +43,11 @@ const InputModule = {
             this.toggleState(false);
         });
 
+        /* ========== PART 5: SINGLE STEP EXECUTION (Commit 5) ========== */
+        document.getElementById('btn-step')
+            .addEventListener('click', () => logic.nextStep());
+
+
 
     
 
