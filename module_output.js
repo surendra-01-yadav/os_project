@@ -116,4 +116,22 @@ const OutputModule = {
             this.els.table.appendChild(div);
         });
 
+/* ========== PART 7: RENDER DP – FORKS + COUNTERS (Commit 7) ========== */
+        state.forks.forEach((av, i) => {
+            const ang = (i * 72 - 54) * Math.PI / 180;
+            const fr = r * 0.7;
+            const x = cx + fr * Math.cos(ang) - 4;
+            const y = cy + fr * Math.sin(ang) - 45;
+
+            const div = document.createElement('div');
+            div.className = `fork ${!av ? 'taken' : ''}`;
+            div.style.left = `${x}px`;
+            div.style.top = `${y}px`;
+            div.style.transform = `rotate(${ang * (180/Math.PI) + 90}deg)`;
+            this.els.table.appendChild(div);
+        });
+
+        this.els.valForks.innerText = state.forks.filter(f => f).length;
+    }
+};
 
