@@ -51,6 +51,15 @@ const InputModule = {
         document.getElementById('inp-buffer-size')
             .addEventListener('change', (e) => logic.setBufferSize(e.target.value));
 
+        /* ========== PART 7: PROCESS ACTION BUTTONS (Commit 7) ========== */
+        const act = (id, fn) => document.getElementById(id).addEventListener('click', fn);
+
+        act('btn-add-prod', () => logic.addProcess('prod'));
+        act('btn-rem-prod', () => logic.removeProcess('prod'));
+        act('btn-add-cons', () => logic.addProcess('cons'));
+        act('btn-rem-cons', () => logic.removeProcess('cons'));
+    },
+
 
 
     
